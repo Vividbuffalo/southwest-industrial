@@ -1,0 +1,4 @@
+# Demo preview: keep out of search until launch
+User-agent: *
+Disallow: /
+Sitemap: https://stellartimelock.github.io/southwest-industrial/sitemap.xml
