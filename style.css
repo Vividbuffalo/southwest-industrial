@@ -76,4 +76,4 @@ button,input,select,textarea{font-family:inherit}
 .card p,.cat p,.ind p,.ticks li,.prose p,.clist li,.ftr p{line-height:1.6}
 @media(max-width:639px){.card p,.cat p,.ind p,.ticks li,label,input,select,textarea,.ftr,.clist li{font-size:17px}}
 .card p,.cat p,.ind p,.head p,.steps p,.tl p,.prose p,.clist li,.ticks li{color:var(--tx)}
-main a:not(.btn){color:#a8400c}.band a.link,.emerg a,.ftr a{color:var(--y)}.emerg a{color:#fff}
+main a:not(.btn):not(.card){color:#a8400c}main .emerg a,main .band a.link{color:#fff}main .band a.link{color:var(--y)}a.card{color:var(--tx)}
