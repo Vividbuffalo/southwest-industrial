@@ -1,7 +1,7 @@
 (function(){
 var m=document.querySelector('.menu'),n=document.getElementById('nav');
 if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
-// DEMO ONLY: forms submit nowhere. No fetch, no action. Turnstile uses Cloudflare's public TEST sitekey.
+// Contact form (data-endpoint) posts to the swi-contact Worker. Hose and quote forms: DEMO ONLY, submit nowhere. No fetch, no action. Turnstile uses Cloudflare's public TEST sitekey.
 // Before going live: use a production sitekey and verify the cf-turnstile-response token server-side (siteverify).
 document.querySelectorAll('.demo-form').forEach(function(f){
   f.addEventListener('submit',function(e){
@@ -11,7 +11,17 @@ document.querySelectorAll('.demo-form').forEach(function(f){
     var hp=f.querySelector('input[name=website]');if(hp&&hp.value)return; // honeypot: bots fill it, silently drop
     var t=f.querySelector('[name="cf-turnstile-response"]'),err=f.querySelector('.ts-err');
     if(!t||!t.value){err.hidden=false;return}err.hidden=true;
-    f.hidden=true;var ok=f.nextElementSibling;ok.hidden=false;ok.scrollIntoView({behavior:'smooth',block:'center'});
+    var ok=f.nextElementSibling,ep=f.getAttribute('data-endpoint');
+    var show=function(){f.hidden=true;ok.hidden=false;ok.scrollIntoView({behavior:'smooth',block:'center'})};
+    if(!ep){show();return}
+    var FAIL="Couldn't send right now, please call 928-522-9296 or email orders@southwest-industrial.com";
+    var btn=f.querySelector('button[type=submit]'),msg=f.querySelector('.send-err');
+    if(!msg){msg=document.createElement('p');msg.className='err send-err';msg.setAttribute('role','alert');btn.insertAdjacentElement('afterend',msg)}
+    msg.hidden=true;btn.disabled=true;var lbl=btn.textContent;btn.textContent='Sending...';
+    fetch(ep,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{s:r.status,j:j}})})
+    .then(function(x){if(x.j&&x.j.ok){show();return}msg.textContent=(x.s>=400&&x.s<500&&x.s!==429&&x.j&&x.j.error)?x.j.error+'. '+FAIL:FAIL;msg.hidden=false;if(window.turnstile){try{turnstile.reset(f.querySelector('.cf-turnstile'))}catch(e){}}})
+    .catch(function(){msg.textContent=FAIL;msg.hidden=false})
+    .then(function(){btn.disabled=false;btn.textContent=lbl});
   });
   var ok=f.nextElementSibling;ok.querySelector('.again').addEventListener('click',function(){f.reset();ok.hidden=true;f.hidden=false;if(window.turnstile){var w=f.querySelector('.cf-turnstile');try{turnstile.reset(w)}catch(x){}}});
 });
