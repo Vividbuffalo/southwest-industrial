@@ -5,7 +5,8 @@ if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.se
 // Before going live: use a production sitekey and verify the cf-turnstile-response token server-side (siteverify).
 document.querySelectorAll('.demo-form').forEach(function(f){
   f.addEventListener('submit',function(e){
-    e.preventDefault();var bad=false;
+    e.preventDefault();if(f.hasAttribute('data-off'))return; // contact form disabled until email is connected
+    var bad=false;
     f.querySelectorAll('[required]').forEach(function(i){var v=i.value.trim()===''||(i.type==='email'&&i.value&&!/^\S+@\S+\.\S+$/.test(i.value));i.classList.toggle('invalid',v);if(v&&!bad){bad=true;i.focus()}});
     if(bad)return;
     var hp=f.querySelector('input[name=website]');if(hp&&hp.value)return; // honeypot: bots fill it, silently drop
