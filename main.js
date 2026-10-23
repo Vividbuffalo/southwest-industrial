@@ -1,7 +1,7 @@
 (function(){
 var m=document.querySelector('.menu'),n=document.getElementById('nav');
 if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
-// Contact form (data-endpoint) posts to the swi-contact Worker. Hose/quote .demo-form: DEMO ONLY.
+// Contact + hose forms (data-endpoint) post to the swi-contact Worker. Quote .demo-form: DEMO ONLY.
 var seen=new Set();
 document.querySelectorAll('.demo-form, form[data-endpoint]').forEach(function(f){
   if(seen.has(f))return;seen.add(f);
