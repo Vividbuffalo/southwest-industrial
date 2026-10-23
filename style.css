@@ -65,12 +65,12 @@ fieldset{border:1px solid #d9dde1;border-radius:4px;padding:12px;display:grid;ga
 .unit{display:flex;gap:6px}.unit input{flex:1;min-width:0}.unit select{width:auto;flex:none}
 
 ::placeholder{color:#6b747d;opacity:1}
-.bgrid{display:grid;gap:14px 24px}.bcat h3{font-size:.95rem;margin:0 0 6px;padding-bottom:4px;border-bottom:2px solid var(--y)}
-.logos{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}.logos li{background:#fff;border:1px solid #e1e4e7;border-radius:4px;padding:4px 6px;display:flex;align-items:center}
-.logos img{height:34px;width:auto;max-width:130px;object-fit:contain}
+.bgrid{display:grid;gap:10px 20px}.bcat h3{font-size:.9rem;margin:0 0 4px;padding-bottom:3px;border-bottom:2px solid var(--y)}
+.bnames{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:2px 0;font-size:.86rem;line-height:1.35;color:var(--tx,#2a2e33)}
+.bnames li{padding:0}.bnames li:not(:last-child)::after{content:" · ";color:#9aa3ab;padding:0 5px 0 2px;font-weight:400}
 .az{margin-top:20px}.az summary{cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:10px 0}.az .blist{margin-top:8px}
 @media(min-width:640px){.bgrid{grid-template-columns:1fr 1fr}}@media(min-width:960px){.bgrid{grid-template-columns:1fr 1fr 1fr}}
-@media(max-width:639px){.logos{gap:4px}.logos li{padding:3px 4px}.logos img{height:26px;max-width:92px}.bgrid{gap:10px}.bcat h3{font-size:.85rem}.phero{padding:28px 0 22px}}
+@media(max-width:639px){.bnames{font-size:.8rem}.bgrid{gap:10px}.bcat h3{font-size:.85rem}.phero{padding:28px 0 22px}}
 
 button,input,select,textarea{font-family:inherit}
 .card p,.cat p,.ind p,.ticks li,.prose p,.clist li,.ftr p{line-height:1.6}
