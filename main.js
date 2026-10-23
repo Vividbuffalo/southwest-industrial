@@ -1,15 +1,16 @@
 (function(){
 var m=document.querySelector('.menu'),n=document.getElementById('nav');
 if(m)m.addEventListener('click',function(){var o=n.classList.toggle('open');m.setAttribute('aria-expanded',o)});
-// Contact form (data-endpoint) posts to the swi-contact Worker. Hose and quote forms: DEMO ONLY, submit nowhere. No fetch, no action. Turnstile uses Cloudflare's public TEST sitekey.
-// Before going live: use a production sitekey and verify the cf-turnstile-response token server-side (siteverify).
-document.querySelectorAll('.demo-form').forEach(function(f){
+// Contact form (data-endpoint) posts to the swi-contact Worker. Hose/quote .demo-form: DEMO ONLY.
+var seen=new Set();
+document.querySelectorAll('.demo-form, form[data-endpoint]').forEach(function(f){
+  if(seen.has(f))return;seen.add(f);
   f.addEventListener('submit',function(e){
-    e.preventDefault();if(f.hasAttribute('data-off'))return; // contact form disabled until email is connected
+    e.preventDefault();if(f.hasAttribute('data-off'))return;
     var bad=false;
     f.querySelectorAll('[required]').forEach(function(i){var v=i.value.trim()===''||(i.type==='email'&&i.value&&!/^\S+@\S+\.\S+$/.test(i.value));i.classList.toggle('invalid',v);if(v&&!bad){bad=true;i.focus()}});
     if(bad)return;
-    var hp=f.querySelector('input[name=website]');if(hp&&hp.value)return; // honeypot: bots fill it, silently drop
+    var hp=f.querySelector('input[name=website]');if(hp&&hp.value)return;
     var t=f.querySelector('[name="cf-turnstile-response"]'),err=f.querySelector('.ts-err');
     if(!t||!t.value){err.hidden=false;return}err.hidden=true;
     var ok=f.nextElementSibling,ep=f.getAttribute('data-endpoint');
